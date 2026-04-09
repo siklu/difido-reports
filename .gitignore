@@ -38,6 +38,7 @@ __pycache__/
 *.pyc
 build/
 dist/
+.vscode/
 *.egg-info/
 
 #Project files
