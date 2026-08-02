@@ -36,10 +36,27 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <topq.repository.rootUrl>http://maven.top-q.co.il</topq.repository.rootUrl>
-        <jsystem.version>6.1.12</jsystem.version>
+        <jsystem.version>6.1.17-SIKLU</jsystem.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+    <repositories>
+        <repository>
+            <id>Automation</id>
+            <url>http://nexus.siklu.local/repository/ATE/</url>
+        </repository>
+        <repository>
+            <id>Automation-snapshots</id>
+            <url>http://nexus.siklu.local/repository/ATE/</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>Automation</id>
+            <url>http://nexus.siklu.local/repository/ATE/</url>
+        </pluginRepository>
+    </pluginRepositories>
     <build>
         <plugins>
             <plugin>
