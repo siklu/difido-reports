@@ -17,11 +17,12 @@ import org.apache.hc.core5.http.io.entity.StringEntity;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class DifidoClient {
+public class DifidoClient implements AutoCloseable {
 
 	private static final String BASE_URI_TEMPLATE = "http://%s:%d/api/";
 	private final String baseUri;
 	private final CloseableHttpClient client;
+	private boolean closed = false;
 
 	public DifidoClient(String host, int port) {
 		baseUri = String.format(BASE_URI_TEMPLATE, host, port);
@@ -97,6 +98,21 @@ public class DifidoClient {
 	private void handleResponseCode(int responseCode) throws IOException {
 		if (responseCode != 200 && responseCode != 204) {
 			throw new IOException("Request was not successful. Response is: " + responseCode);
+		}
+	}
+
+	/**
+	 * Closes the underlying HTTP client connection pool and releases resources.
+	 * This method must be called to avoid connection pool exhaustion in long-running
+	 * test suites and CI environments. Safe to call multiple times (idempotent).
+	 *
+	 * @throws IOException if an I/O error occurs while closing the client
+	 */
+	@Override
+	public void close() throws IOException {
+		if (!closed) {
+			closed = true;
+			client.close();
 		}
 	}
 

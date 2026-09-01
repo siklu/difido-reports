@@ -95,6 +95,14 @@ public class RemoteDifidoReporter extends AbstractDifidoReporter {
             }
             executionId = -1;
         }
+        // Close the HTTP client to release connection pool resources
+        if (client != null) {
+            try {
+                client.close();
+            } catch (Exception e) {
+                log.warning("Failed to close DifidoClient connection: " + e.getMessage());
+            }
+        }
         super.onExecutionFinish();
 
     }
