@@ -56,7 +56,7 @@ public class ExecutionMetadata implements Comparable<ExecutionMetadata> {
 	 */
 	@ElementCollection
 	@MapKeyColumn(name = "name")
-	@Column(name = "prop_value", length = 1024)
+	@Column(name = "value", length = 1024)
 	@CollectionTable(name = "execution_properties", joinColumns = @JoinColumn(name = "metadata_id"))
 	private Map<String, String> properties;
 

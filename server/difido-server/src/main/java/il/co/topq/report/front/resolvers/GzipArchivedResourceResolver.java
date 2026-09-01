@@ -76,8 +76,11 @@ import org.springframework.web.servlet.resource.ResourceResolverChain;
 	 * @return true if the Accept-Encoding header contains "gzip", false otherwise
 	 */
 	private boolean acceptsGzip(HttpServletRequest request) {
+		if (request == null) {
+ 			return false;
+ 		}
 		String acceptEncoding = request.getHeader("Accept-Encoding");
-		return acceptEncoding != null && acceptEncoding.contains("gzip");
+		return acceptEncoding != null && acceptEncoding.toLowerCase(java.util.Locale.ROOT).contains("gzip");
 	}
 
 	@Override
