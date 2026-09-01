@@ -1,22 +1,21 @@
 package il.co.topq.report.plugins.mail;
 
 import java.io.File;
-import java.security.Security;
 import java.util.Properties;
 
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
-import javax.mail.Message;
-import javax.mail.Multipart;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
+import jakarta.activation.DataHandler;
+import jakarta.activation.DataSource;
+import jakarta.activation.FileDataSource;
+import jakarta.mail.Message;
+import jakarta.mail.Multipart;
+import jakarta.mail.PasswordAuthentication;
+import jakarta.mail.Session;
+import jakarta.mail.Transport;
+import jakarta.mail.internet.AddressException;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeBodyPart;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.internet.MimeMultipart;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -128,7 +127,6 @@ public class MailSender {
 	 * @throws Exception
 	 * 				Failure in sending the mail
 	 */
-	@SuppressWarnings("restriction")
 	public void sendMail(String title, String msgContent) throws Exception {
 
 		Properties props = new Properties();
@@ -140,8 +138,6 @@ public class MailSender {
 			props.put("mail.smtp.socketFactory.fallback", "false");
 		}
 
-		Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
-
 		props.put("mail.smtp.host", smtpHostName);
 
 		props.put("mail.debug", isDebug + "");
@@ -151,7 +147,7 @@ public class MailSender {
 
 		if (password != null) {
 			props.put("mail.smtp.auth", "true");
-			session = Session.getInstance(props, new javax.mail.Authenticator() {
+			session = Session.getInstance(props, new jakarta.mail.Authenticator() {
 
 				protected PasswordAuthentication getPasswordAuthentication() {
 					return new PasswordAuthentication(userName, password);

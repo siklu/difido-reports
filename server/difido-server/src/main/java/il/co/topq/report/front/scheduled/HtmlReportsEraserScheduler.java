@@ -61,7 +61,7 @@ public class HtmlReportsEraserScheduler {
 			if (state.isLocked() || !state.isHtmlExists()) {
 				continue;
 			}
-			final ExecutionMetadata meta = metadataRepository.getOne(state.getId());
+			final ExecutionMetadata meta = metadataRepository.getReferenceById(state.getId());
 			final LocalDate executionDate = meta.getTimestamp().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			final long old = ChronoUnit.DAYS.between(executionDate, today);
 

@@ -5,12 +5,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>il.co.top-q.report</groupId>
 	<artifactId>difido-server</artifactId>
-	<version>3.1.02-SNAPSHOT</version>
+	<version>3.2.1-SIKLU</version>
 	<name>Difido Server</name>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.4.RELEASE</version>
+		<version>4.1.0</version>
 	</parent>
 	<organization>
 		<name>Top-Q</name>
@@ -32,15 +32,25 @@
 	<properties>
 		<topq.repository.rootUrl>http://maven.top-q.co.il</topq.repository.rootUrl>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>25</maven.compiler.source>
+		<maven.compiler.target>25</maven.compiler.target>
 	</properties>
 	<repositories>
-		<repository>
-			<id>top-q</id>
-			<url>https://maven.top-q.co.il/content/groups/public</url>
-		</repository>
-	</repositories>
+        <repository>
+            <id>Automation</id>
+            <url>https://nsw.ceragon.com/repository/ATE/</url>
+        </repository>
+        <repository>
+            <id>Automation-snapshots</id>
+            <url>https://nsw.ceragon.com/repository/ATE/</url>
+        </repository>
+    </repositories>
+	<pluginRepositories>
+        <pluginRepository>
+            <id>Automation</id>
+            <url>https://nsw.ceragon.com/repository/ATE/</url>
+        </pluginRepository>
+    </pluginRepositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -57,7 +67,6 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -77,11 +86,12 @@
 		<dependency>
 			<groupId>net.java.dev.jna</groupId>
 			<artifactId>jna</artifactId>
+			<version>5.19.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.spullara.mustache.java</groupId>
 			<artifactId>compiler</artifactId>
-			<version>0.9.1</version>
+			<version>0.9.14</version>
 		</dependency>
 		<dependency>
 			<groupId>il.co.top-q.difido</groupId>
@@ -91,34 +101,43 @@
 		<dependency>
 			<groupId>io.searchbox</groupId>
 			<artifactId>jest</artifactId>
+			<version>6.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-multipart</artifactId>
-			<version>2.22.1</version>
+			<version>4.0.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy</artifactId>
+			<version>3.0.25</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-expressions</artifactId>
-			<version>5.4.0</version>
+			<version>10.5.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.zeroturnaround</groupId>
 			<artifactId>zt-zip</artifactId>
-			<version>1.13</version>
+			<version>1.18.2</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>1.4.193</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>4.5.0</version>
 		</dependency>
 
 	</dependencies>
+
+	<distributionManagement>
+		<repository>
+			<id>Automation</id>
+			<url>https://nsw.ceragon.com/repository/Automation/</url>
+		</repository>
+	</distributionManagement>
 
 	<build>
 		<plugins>
@@ -158,7 +177,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-site-plugin</artifactId>
-				<version>4.0.0-M4</version>
+				<version>4.0.0-M16</version>
 			</plugin>
 		</plugins>
 	</build>

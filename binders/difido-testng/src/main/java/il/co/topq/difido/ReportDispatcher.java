@@ -4,9 +4,6 @@ import il.co.topq.difido.model.Enums.Status;
 
 import java.io.File;
 
-import org.testng.IInvokedMethod;
-import org.testng.ITestResult;
-
 public interface ReportDispatcher {
 
 	void logHtml(String title, Status status);

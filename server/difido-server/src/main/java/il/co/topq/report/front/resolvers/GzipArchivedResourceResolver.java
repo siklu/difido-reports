@@ -7,101 +7,118 @@ import java.net.URI;
 import java.net.URL;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.AbstractResource;
 import org.springframework.core.io.Resource;
-import org.springframework.web.servlet.resource.EncodedResource;
-import org.springframework.web.servlet.resource.GzipResourceResolver;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.servlet.resource.AbstractResourceResolver;
+import org.springframework.web.servlet.resource.HttpResource;
 import org.springframework.web.servlet.resource.ResourceResolverChain;
 
 /**
- * This class extends Spring's GzipResourceResolver adding the functionality to 
- * retrieve a gzipped resource even if an original (unzipped) resource does not exist.
- * e.g. if a request came for myResource.js but we only have myResource.js.gz we will 
- * fetch it. 
- *   
- * @author alik.gershon
- *
- */
-public class GzipArchivedResourceResolver extends GzipResourceResolver {
-	private final static String GZ = ".gz";
+	 * Serves a gzipped resource preferentially when the client accepts gzip encoding and a .gz
+	 * resource exists. Falls back to the original uncompressed resource, or to .gz as a final
+	 * fallback. This enables bandwidth optimization for clients that support decompression.
+	 */
+	public class GzipArchivedResourceResolver extends AbstractResourceResolver {
+
+	private static final Logger logger = LoggerFactory.getLogger(GzipArchivedResourceResolver.class);
+	private static final String GZ = ".gz";
+
 	@Override
 	protected Resource resolveResourceInternal(HttpServletRequest request, String requestPath,
 			List<? extends Resource> locations, ResourceResolverChain chain) {
 
-		//Use the parent's logic for retrieving the resource first (this will include fetching the 
-		//Gzip version of the resource if exists); 
-		//if we managed to retrieve a resource the usual way - just return it 
-		Resource originalResource = super.resolveResourceInternal(request, requestPath, locations, chain);
-		try {	
-			if (originalResource != null){ 
-				return originalResource;
-			}
-
-
-			//a resource was not found, add .gz and try to search down the chain for 
-			//the archived resource. 
-			String newPath = String.format("%s%s", requestPath,GZ);	
-			Resource gzippedResource = chain.resolveResource(request, newPath, locations);
-
-			//No archived resource found, return the original resource (before our intervention). 
-			if (gzippedResource == null){
-				return originalResource;
-			}
-
-
-			GzipArchivedResource archived = new GzipArchivedResource(gzippedResource); 
-			if (archived.exists()){
+		// Resolve both original and gzipped resources
+		Resource originalResource = chain.resolveResource(request, requestPath, locations);
+		Resource gzippedResource = null;
+		
+		try {
+			gzippedResource = chain.resolveResource(request, requestPath + GZ, locations);
+		} catch (Exception e) {
+			logger.error("Unexpected exception resolving gzipped resource for [{}]", requestPath, e);
+		}
+		
+		// Check if client accepts gzip encoding
+		boolean clientAcceptsGzip = acceptsGzip(request);
+		
+		// Prefer gzipped resource if client accepts gzip and .gz resource exists
+		if (clientAcceptsGzip && gzippedResource != null) {
+			GzipArchivedResource archived = new GzipArchivedResource(gzippedResource);
+			if (archived.exists()) {
 				return archived;
 			}
-
-
-		}catch (Exception e){
-			logger.error("Unexpected exception for [" +originalResource.getFilename() + "]",e);
 		}
 		
-		return originalResource;
-
+		// Return original resource if it exists
+		if (originalResource != null) {
+			return originalResource;
+		}
 		
+		// Fallback: return gzipped resource even if client doesn't accept gzip
+		if (gzippedResource != null) {
+			GzipArchivedResource archived = new GzipArchivedResource(gzippedResource);
+			if (archived.exists()) {
+				return archived;
+			}
+		}
 		
+		return null;
 	}
-	
+
 	/**
-	 * This resource wrapper will return the originally requested fileName
-	 * stripping off the .gz part. 
+	 * Checks if the HTTP request indicates that the client accepts gzip encoding.
+	 *
+	 * @param request the HTTP request
+	 * @return true if the Accept-Encoding header contains "gzip", false otherwise
 	 */
-	private static final class GzipArchivedResource extends AbstractResource implements EncodedResource {
+	private boolean acceptsGzip(HttpServletRequest request) {
+		if (request == null) {
+ 			return false;
+ 		}
+		String acceptEncoding = request.getHeader("Accept-Encoding");
+		return acceptEncoding != null && acceptEncoding.toLowerCase(java.util.Locale.ROOT).contains("gzip");
+	}
+
+	@Override
+	protected String resolveUrlPathInternal(String resourceUrlPath, List<? extends Resource> locations,
+			ResourceResolverChain chain) {
+		return chain.resolveUrlPath(resourceUrlPath, locations);
+	}
+
+	private static final class GzipArchivedResource extends AbstractResource implements HttpResource {
 		private final Resource archived;
-		private String originalFileName;
-		
+		private final String originalFileName;
+
 		public GzipArchivedResource(Resource resource) {
 			this.archived = resource;
-			int fileLength = resource.getFilename().length();
-			originalFileName = resource.getFilename().substring(0,fileLength - GZ.length());
-			
+			String name = resource.getFilename();
+			originalFileName = name.substring(0, name.length() - GZ.length());
 		}
-		
-		
+
 		@Override
 		public boolean isReadable() {
 			return this.archived.isReadable();
 		}
-		
+
 		@Override
 		public boolean isOpen() {
 			return this.archived.isOpen();
 		}
-		
+
 		@Override
 		public boolean exists() {
 			return this.archived.exists();
 		}
+
 		@Override
 		public String getDescription() {
 			return archived.getDescription();
 		}
-		
+
 		@Override
 		public File getFile() throws IOException {
 			return this.archived.getFile();
@@ -111,12 +128,12 @@ public class GzipArchivedResourceResolver extends GzipResourceResolver {
 		public URI getURI() throws IOException {
 			return this.archived.getURI();
 		}
-		
+
 		@Override
 		public URL getURL() throws IOException {
 			return this.archived.getURL();
 		}
-		
+
 		@Override
 		public InputStream getInputStream() throws IOException {
 			return archived.getInputStream();
@@ -125,22 +142,25 @@ public class GzipArchivedResourceResolver extends GzipResourceResolver {
 		@Override
 		public long lastModified() throws IOException {
 			return this.archived.lastModified();
-		}		
-		
+		}
+
 		@Override
 		public long contentLength() throws IOException {
 			return this.archived.contentLength();
 		}
-		
+
 		@Override
 		public Resource createRelative(String relativePath) throws IOException {
 			return this.archived.createRelative(relativePath);
 		}
+
 		@Override
-		public String getContentEncoding() {
-			return "gzip";
+		public HttpHeaders getResponseHeaders() {
+			HttpHeaders headers = new HttpHeaders();
+			headers.set(HttpHeaders.CONTENT_ENCODING, "gzip");
+			return headers;
 		}
-		
+
 		@Override
 		public String getFilename() {
 			return originalFileName;

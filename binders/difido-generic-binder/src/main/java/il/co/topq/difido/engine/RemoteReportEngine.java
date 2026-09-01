@@ -83,6 +83,12 @@ public class RemoteReportEngine implements ReportEngine {
 		} catch (Exception e) {
 			log.error("Failed to end execution with id " + executionId + " due to " + e.getMessage());
 		}
+		// Close the HTTP client to release connection pool resources
+		try {
+			client.close();
+		} catch (Exception e) {
+			log.error("Failed to close DifidoClient connection: " + e.getMessage());
+		}
 	}
 
 }

@@ -10,16 +10,16 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import org.apache.commons.collections.buffer.CircularFifoBuffer;
+import org.apache.commons.collections4.queue.CircularFifoQueue;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.actuate.health.Health;
-import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.boot.actuate.info.Info.Builder;
 import org.springframework.boot.actuate.info.InfoContributor;
+import org.springframework.boot.health.contributor.Health;
+import org.springframework.boot.health.contributor.HealthIndicator;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
@@ -80,7 +80,7 @@ public class ReportsArchiver implements Archiver, HealthIndicator, InfoContribut
 	 * Data structure used for keeping history records of the last archive
 	 * operations. This only used when reading the server info
 	 */
-	private final CircularFifoBuffer archiveHistory;
+	private final CircularFifoQueue<Object> archiveHistory;
 
 	/**
 	 * Provides the concurrency mechanisms
@@ -98,7 +98,7 @@ public class ReportsArchiver implements Archiver, HealthIndicator, InfoContribut
 		reportsFolder = Configuration.INSTANCE.readString(ConfigProps.DOC_ROOT_FOLDER) + File.separator
 				+ Common.REPORTS_FOLDER_NAME;
 		maxToArchive = Configuration.INSTANCE.readInt(ConfigProps.ARCHIVER_MAX_TO_ARCHIVE);
-		archiveHistory = new CircularFifoBuffer(MAX_RECORDS_IN_HISTORY);
+		archiveHistory = new CircularFifoQueue<>(MAX_RECORDS_IN_HISTORY);
 		this.stateRespository = stateRespository;
 		this.jdbc = jdbc;
 	}

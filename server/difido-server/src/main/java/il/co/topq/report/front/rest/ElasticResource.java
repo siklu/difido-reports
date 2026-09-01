@@ -3,13 +3,10 @@ package il.co.topq.report.front.rest;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.DefaultValue;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.DefaultValue;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +18,8 @@ import org.springframework.web.client.RestTemplate;
 
 import il.co.topq.report.Configuration;
 import il.co.topq.report.Configuration.ConfigProps;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.ws.rs.core.Context;
 
 @RestController
 public class ElasticResource {

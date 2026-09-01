@@ -3,7 +3,7 @@ package il.co.topq.report.business.upgrade;
 import java.io.File;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

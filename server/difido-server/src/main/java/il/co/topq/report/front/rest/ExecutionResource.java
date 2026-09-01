@@ -7,19 +7,19 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.DefaultValue;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.DefaultValue;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MediaType;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -180,13 +180,13 @@ public class ExecutionResource {
 	}
 
 	private ExecutionState getState(int id) {
-		return stateRepository.findOne(id);
+		return stateRepository.findById(id).orElse(null);
 	}
 
 	private ExecutionMetadata getSharedMatadata() {
 		List<ExecutionState> activeStates = stateRepository.findByActive(true);
 		for (ExecutionState activeState : activeStates) {
-			ExecutionMetadata metadata = metadataRepository.findOne(activeState.getId());
+			ExecutionMetadata metadata = metadataRepository.findById(activeState.getId());
 			if (metadata.isShared()) {
 				return metadata;
 			}
@@ -252,7 +252,7 @@ public class ExecutionResource {
 		log.debug("PUT (" + request.getRemoteAddr() + ") - Upating execution with id " + executionId + ". to active: "
 				+ active + ", locked: " + locked + ", serial number: " + serialNum + ", metadata: " + metadataStr);
 
-		final ExecutionState state = stateRepository.findOne(executionId);
+		final ExecutionState state = stateRepository.findById(executionId).orElse(null);
 		if (null == state) {
 			log.warn("Request from " + request.getRemoteAddr() + " to update the state of execution with id "
 					+ executionId + " which is not exist");
@@ -323,7 +323,7 @@ public class ExecutionResource {
 			@DefaultValue("true") @QueryParam("fromElastic") boolean deleteFromElastic) {
 		log.debug("DELETE  (" + request.getRemoteAddr() + ") - Delete execution with id " + executionId
 				+ ". Delete from Elastic=" + deleteFromElastic);
-		final ExecutionState state = stateRepository.findOne(executionId);
+		final ExecutionState state = stateRepository.findById(executionId).orElse(null);
 		if (null == state) {
 			log.warn("Request from " + request.getRemoteAddr() + " to delete execution with index " + executionId
 					+ " which is not exist");

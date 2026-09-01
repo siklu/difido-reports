@@ -87,7 +87,7 @@ public class PluginController implements InfoContributor {
 	public List<String> getPluginNames() {
 		List<String> pluginNames = new ArrayList<String>();
 		for (Plugin plugin : pluginManager.getPlugins(Plugin.class)) {
-			if (StringUtils.isEmpty(plugin.getName())) {
+			if (!StringUtils.hasText(plugin.getName())) {
 				continue;
 			}
 			pluginNames.add(plugin.getName().trim());
@@ -111,7 +111,7 @@ public class PluginController implements InfoContributor {
 	 */
 	public void executePlugin(final String pluginName, final List<ExecutionMetadata> metaDataList,
 			List<Execution> executions, final String params) {
-		if (StringUtils.isEmpty(pluginName)) {
+		if (!StringUtils.hasText(pluginName)) {
 			log.warn("Trying to call plugin with empty name");
 			return;
 		}
@@ -132,7 +132,7 @@ public class PluginController implements InfoContributor {
 
 	public String executeInteractivePlugin(final String pluginName, final List<ExecutionMetadata> metaDataList,
 			final List<Execution> executions, final String params) {
-		if (StringUtils.isEmpty(pluginName)) {
+		if (!StringUtils.hasText(pluginName)) {
 			log.warn("Trying to call plugin with empty name");
 			return "";
 		}

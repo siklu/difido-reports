@@ -87,7 +87,7 @@ public class DifidoReporterTests extends AbstractTestCase {
 			for (int i=0;i<1000000;i++){
 				sb.append("line: #" + i).append("\n");
 			}
-			FileUtils.write(file, sb.toString());
+			FileUtils.write(file, sb.toString(), java.nio.charset.StandardCharsets.UTF_8);
 			
 			
 			report.addFile(file, "Really big file");

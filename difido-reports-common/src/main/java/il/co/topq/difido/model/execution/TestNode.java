@@ -148,7 +148,7 @@ public class TestNode extends Node {
 		if (description != null) {
 			result = 31 * result + description.hashCode();
 		}
-		result = 31 * result + new Long(duration).intValue();
+		result = 31 * result + (int) (long) duration;
 		if (timestamp != null) {
 			result = 31 * result + timestamp.hashCode();
 		}

@@ -2,7 +2,7 @@ package il.co.topq.report.business;
 
 import java.util.Date;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 import org.h2.jdbcx.JdbcDataSource;
 import org.slf4j.Logger;
@@ -43,7 +43,7 @@ public class JdbcInserter {
 			+ "(METADATA_ID, ACTIVE , HTML_EXISTS , LOCKED ) VALUES (?,?,?,?);";
 
 	private static final String EXECUTION_PROPERTIES_QUERY_TEMPLATE = "INSERT INTO EXECUTION_PROPERTIES "
-			+ "(METADATA_ID, NAME , VALUE ) VALUES (?,?,?);";
+			+ "(METADATA_ID, NAME , PROP_VALUE ) VALUES (?,?,?);";
 
 	private JdbcTemplate template;
 

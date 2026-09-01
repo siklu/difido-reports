@@ -30,7 +30,7 @@ public abstract class AbstractPropertiesConfigFile {
 			initDefaultProperties();
 		}
 		try {
-			String content = FileUtils.readFileToString(propertiesFile);
+			String content = FileUtils.readFileToString(propertiesFile, java.nio.charset.StandardCharsets.UTF_8);
 			// In case we are reading file locations we replace the backslash with double
 			// backslash
 			properties.load(new StringReader(content.replace("\\", "\\\\")));
