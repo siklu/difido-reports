@@ -19,9 +19,11 @@ import org.springframework.web.servlet.resource.HttpResource;
 import org.springframework.web.servlet.resource.ResourceResolverChain;
 
 /**
- * Serves a gzipped resource even when no original (unzipped) resource exists.
- */
-public class GzipArchivedResourceResolver extends AbstractResourceResolver {
+	 * Serves a gzipped resource preferentially when the client accepts gzip encoding and a .gz
+	 * resource exists. Falls back to the original uncompressed resource, or to .gz as a final
+	 * fallback. This enables bandwidth optimization for clients that support decompression.
+	 */
+	public class GzipArchivedResourceResolver extends AbstractResourceResolver {
 
 	private static final Logger logger = LoggerFactory.getLogger(GzipArchivedResourceResolver.class);
 	private static final String GZ = ".gz";
@@ -30,24 +32,52 @@ public class GzipArchivedResourceResolver extends AbstractResourceResolver {
 	protected Resource resolveResourceInternal(HttpServletRequest request, String requestPath,
 			List<? extends Resource> locations, ResourceResolverChain chain) {
 
+		// Resolve both original and gzipped resources
 		Resource originalResource = chain.resolveResource(request, requestPath, locations);
-		if (originalResource != null) {
-			return originalResource;
-		}
-
+		Resource gzippedResource = null;
+		
 		try {
-			Resource gzippedResource = chain.resolveResource(request, requestPath + GZ, locations);
-			if (gzippedResource != null) {
-				GzipArchivedResource archived = new GzipArchivedResource(gzippedResource);
-				if (archived.exists()) {
-					return archived;
-				}
-			}
+			gzippedResource = chain.resolveResource(request, requestPath + GZ, locations);
 		} catch (Exception e) {
 			logger.error("Unexpected exception resolving gzipped resource for [{}]", requestPath, e);
 		}
-
+		
+		// Check if client accepts gzip encoding
+		boolean clientAcceptsGzip = acceptsGzip(request);
+		
+		// Prefer gzipped resource if client accepts gzip and .gz resource exists
+		if (clientAcceptsGzip && gzippedResource != null) {
+			GzipArchivedResource archived = new GzipArchivedResource(gzippedResource);
+			if (archived.exists()) {
+				return archived;
+			}
+		}
+		
+		// Return original resource if it exists
+		if (originalResource != null) {
+			return originalResource;
+		}
+		
+		// Fallback: return gzipped resource even if client doesn't accept gzip
+		if (gzippedResource != null) {
+			GzipArchivedResource archived = new GzipArchivedResource(gzippedResource);
+			if (archived.exists()) {
+				return archived;
+			}
+		}
+		
 		return null;
+	}
+
+	/**
+	 * Checks if the HTTP request indicates that the client accepts gzip encoding.
+	 *
+	 * @param request the HTTP request
+	 * @return true if the Accept-Encoding header contains "gzip", false otherwise
+	 */
+	private boolean acceptsGzip(HttpServletRequest request) {
+		String acceptEncoding = request.getHeader("Accept-Encoding");
+		return acceptEncoding != null && acceptEncoding.contains("gzip");
 	}
 
 	@Override
