@@ -4,18 +4,18 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.persistence.Cacheable;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapKeyColumn;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import jakarta.persistence.Cacheable;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapKeyColumn;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Cacheable
@@ -56,7 +56,7 @@ public class ExecutionMetadata implements Comparable<ExecutionMetadata> {
 	 */
 	@ElementCollection
 	@MapKeyColumn(name = "name")
-	@Column(name = "value", length = 1024)
+	@Column(name = "prop_value", length = 1024)
 	@CollectionTable(name = "execution_properties", joinColumns = @JoinColumn(name = "metadata_id"))
 	private Map<String, String> properties;
 
@@ -116,6 +116,7 @@ public class ExecutionMetadata implements Comparable<ExecutionMetadata> {
 	 * The date and time in which the execution has started in. e.g. 2015/05/12
 	 * 18:17:49
 	 */
+	@SuppressWarnings("deprecation") // @Temporal deprecated in JPA 3.2; migration to java.time deferred
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "TIMESTAMP")
 	private Date timestamp;

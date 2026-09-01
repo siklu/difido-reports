@@ -2,9 +2,6 @@ package il.co.topq.report.front.rest;
 
 import java.io.IOException;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.Context;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 import il.co.topq.report.business.execution.ExecutionMetadata;
 import il.co.topq.report.events.FileAddedToTestEvent;
 import il.co.topq.report.persistence.MetadataRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.ws.rs.core.Context;
 
 @RestController
 public class FileUploadResource {

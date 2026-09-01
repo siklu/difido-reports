@@ -21,9 +21,9 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>commons-httpclient</groupId>
-			<artifactId>commons-httpclient</artifactId>
-			<version>3.0.1</version>
+			<groupId>org.apache.httpcomponents.client5</groupId>
+			<artifactId>httpclient5</artifactId>
+			<version>5.6.3</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -31,12 +31,12 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>2.12</version>
+				<version>3.5.6</version>
 				<dependencies>
 					<dependency>
 						<groupId>org.apache.maven.surefire</groupId>
 						<artifactId>surefire-testng</artifactId>
-						<version>2.12</version>
+						<version>3.5.6</version>
 						<exclusions>
 							<exclusion>
 								<groupId>org.testng</groupId>
@@ -72,7 +72,7 @@
 				<!-- We don't want surefire to run the tests, instead we want failsafe 
 					to do it -->
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.12.4</version>
+				<version>3.5.6</version>
 				<configuration>
 					<skipTests>true</skipTests>
 				</configuration>

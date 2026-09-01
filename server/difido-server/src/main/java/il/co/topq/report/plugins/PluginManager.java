@@ -54,7 +54,7 @@ public class PluginManager {
 		for (Class<? extends Plugin> pluginClass : pluginClassList) {
 			if (requiredPluginClass.isAssignableFrom(pluginClass)) {
 				try {
-					final T pluginInstance = (T) pluginClass.newInstance();
+					final T pluginInstance = (T) pluginClass.getDeclaredConstructor().newInstance();
 					if (null == pluginInstance.getName() || pluginInstance.getName().isEmpty()) {
 						log.warn("Plugin '" + pluginClass.getName() + "' name is missing");
 					}

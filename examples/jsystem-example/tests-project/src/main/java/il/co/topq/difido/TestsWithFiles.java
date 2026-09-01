@@ -57,7 +57,7 @@ public class TestsWithFiles extends SystemTestCase4 {
 				+ "Mauris purus diam, pharetra et justo eget, congue tristique purus. "
 				+ "In vulputate mi justo, in volutpat magna porttitor a.";
 		File tempFile = File.createTempFile("tempTestingFile", ".txt");
-		FileUtils.write(tempFile, content);
+		FileUtils.write(tempFile, content, java.nio.charset.StandardCharsets.UTF_8);
 		return tempFile;
 	}
 

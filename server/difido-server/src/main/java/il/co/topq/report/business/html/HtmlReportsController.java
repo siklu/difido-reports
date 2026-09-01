@@ -99,7 +99,7 @@ public class HtmlReportsController {
 	 */
 	@EventListener
 	public void onExecutionUpdatedEvent(ExecutionUpdatedEvent executionUpdatedEvent) {
-		final ExecutionState state = stateRepository.getOne(executionUpdatedEvent.getExecutionId());
+		final ExecutionState state = stateRepository.getReferenceById(executionUpdatedEvent.getExecutionId());
 		if (state.isHtmlExists() || state.isLocked()) {
 			return;
 		}

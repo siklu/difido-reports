@@ -133,7 +133,7 @@ public class PersistenceUtils {
 		ObjectMapper mapper = new ObjectMapper();
 		Execution execution = null;
 		try {
-			final String json = FileUtils.readFileToString(executionJson);
+			final String json = FileUtils.readFileToString(executionJson, java.nio.charset.StandardCharsets.UTF_8);
 			execution = mapper.readValue(json.replaceFirst("var execution = ", ""), Execution.class);
 		} catch (IOException e) {
 			log.warning("Found execution json file but failed reading it due to '" + e.getMessage() + "'");
@@ -180,7 +180,7 @@ public class PersistenceUtils {
 		ObjectMapper mapper = new ObjectMapper();
 		TestDetails test = null;
 		try {
-			final String json = FileUtils.readFileToString(testHtml);
+			final String json = FileUtils.readFileToString(testHtml, java.nio.charset.StandardCharsets.UTF_8);
 			test = mapper.readValue(json.replaceFirst("var test = ", ""), TestDetails.class);
 		} catch (IOException e) {
 			log.warning("Found test details json file '" + testHtml.getAbsolutePath()

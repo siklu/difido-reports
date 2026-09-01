@@ -8,11 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
-import org.testng.ISuite;
 
 import il.co.topq.difido.PersistenceUtils;
 import il.co.topq.difido.model.execution.Execution;
-import il.co.topq.difido.model.execution.ScenarioNode;
 import il.co.topq.difido.model.test.TestDetails;
 
 public class LocalDifidoReporter extends AbstractDifidoReporter {

@@ -1,9 +1,7 @@
 package il.co.topq.report.front.rest;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

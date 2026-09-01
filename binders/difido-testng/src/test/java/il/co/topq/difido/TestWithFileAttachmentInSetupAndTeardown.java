@@ -22,7 +22,7 @@ public class TestWithFileAttachmentInSetupAndTeardown extends AbstractTestCase {
 
 	private void addFile() throws IOException {
 		File file = File.createTempFile("file_num_" + index++ + "_", ".txt");
-		FileUtils.write(file, "Some data");
+		FileUtils.write(file, "Some data", java.nio.charset.StandardCharsets.UTF_8);
 		report.addFile(file, "Text file " + index);
 	}
 

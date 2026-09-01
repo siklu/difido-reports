@@ -21,9 +21,9 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.health.Health;
-import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.boot.actuate.info.InfoContributor;
+import org.springframework.boot.health.contributor.Health;
+import org.springframework.boot.health.contributor.HealthIndicator;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -214,7 +214,7 @@ public class ESController implements HealthIndicator, InfoContributor {
 
 			String settings = null;
 			try {
-				settings = FileUtils.readFileToString(settingsFile);
+				settings = FileUtils.readFileToString(settingsFile, java.nio.charset.StandardCharsets.UTF_8);
 			} catch (IOException e) {
 				log.error("Failed to read mapping file. No index mapping will be set to the Elasticsearch", e);
 				return;

@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import il.co.topq.difido.PersistenceUtils;
 import il.co.topq.difido.model.execution.Execution;
@@ -24,7 +24,7 @@ import il.co.topq.report.business.elastic.ESController;
 import il.co.topq.report.front.rest.DifidoClient;
 import il.co.topq.report.persistence.MetadataRepository;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class,webEnvironment = WebEnvironment.DEFINED_PORT)
 public abstract class AbstractResourceTest {
 

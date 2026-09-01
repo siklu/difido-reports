@@ -43,33 +43,33 @@
     <repositories>
         <repository>
             <id>Automation</id>
-            <url>http://nexus.siklu.local/repository/ATE/</url>
+            <url>https://nsw.ceragon.com/repository/ATE/</url>
         </repository>
         <repository>
             <id>Automation-snapshots</id>
-            <url>http://nexus.siklu.local/repository/ATE/</url>
+            <url>https://nsw.ceragon.com/repository/ATE/</url>
         </repository>
     </repositories>
 
     <pluginRepositories>
         <pluginRepository>
             <id>Automation</id>
-            <url>http://nexus.siklu.local/repository/ATE/</url>
+            <url>https://nsw.ceragon.com/repository/ATE/</url>
         </pluginRepository>
     </pluginRepositories>
     <build>
         <plugins>
             <plugin>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>4.0.0-M4</version>
+                <version>4.0.0-M16</version>
             </plugin>
         </plugins>
     </build>
     <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
+        <repository>
+			<id>Automation</id>
+			<url>https://nsw.ceragon.com/repository/Automation/</url>
+		</repository>
     </distributionManagement>
     <profiles>
         <profile>
@@ -79,7 +79,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
-                        <version>2.2.1</version>
+                        <version>3.4.0</version>
                         <executions>
                             <execution>
                                 <id>attach-sources</id>
@@ -91,7 +91,7 @@
                     </plugin>
                     <plugin>
                         <artifactId>maven-install-plugin</artifactId>
-                        <version>2.3.1</version>
+                        <version>3.1.4</version>
                         <configuration>
                             <createChecksum>true</createChecksum>
                         </configuration>
@@ -99,7 +99,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>2.9.1</version>
+                        <version>3.12.0</version>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
@@ -113,7 +113,7 @@
                         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-gpg-plugin -->
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>3.0.1</version>
+                        <version>3.2.8</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -127,7 +127,7 @@
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6.7</version>
+                        <version>1.7.0</version>
                         <extensions>true</extensions>
                         <configuration>
                             <serverId>ossrh</serverId>
@@ -165,7 +165,7 @@
             <dependency>
                 <groupId>org.testng</groupId>
                 <artifactId>testng</artifactId>
-                <version>7.5.1</version>
+                <version>7.12.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

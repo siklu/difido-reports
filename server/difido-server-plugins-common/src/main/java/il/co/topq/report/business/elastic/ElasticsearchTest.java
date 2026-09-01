@@ -136,7 +136,7 @@ public class ElasticsearchTest {
 			result = 31 * result + executionTimeStamp.hashCode();
 		}
 
-		result = 31 * result + new Long(executionDuration).intValue();
+		result = 31 * result + (int) (long) executionDuration;
 
 		if (machine != null) {
 			result = 31 * result + machine.hashCode();
@@ -150,7 +150,7 @@ public class ElasticsearchTest {
 		if (url != null) {
 			result = 31 * result + url.hashCode();
 		}
-		result = 31 * result + new Long(duration).intValue();
+		result = 31 * result + (int) (long) duration;
 
 		if (parameters != null) {
 			result = 31 * result + parameters.hashCode();

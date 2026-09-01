@@ -4,18 +4,6 @@ import static il.co.topq.report.StopWatch.newStopWatch;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +18,10 @@ import il.co.topq.report.business.execution.ExecutionMetadata;
 import il.co.topq.report.events.MachineCreatedEvent;
 import il.co.topq.report.persistence.ExecutionRepository;
 import il.co.topq.report.persistence.MetadataRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.*;
 
 @RestController
 @Path("api/executions/{execution: [0-9]+}/machines")

@@ -6,14 +6,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.resource.PathResourceResolver;
 
 import il.co.topq.report.Configuration.ConfigProps;
 import il.co.topq.report.front.resolvers.GzipArchivedResourceResolver;
 
 @Configuration
-public class StaticResourceConfiguration extends WebMvcConfigurerAdapter {
+public class StaticResourceConfiguration implements WebMvcConfigurer {
 	private final Logger log = LoggerFactory.getLogger(StaticResourceConfiguration.class);
 
 	@Override

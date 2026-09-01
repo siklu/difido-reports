@@ -9,13 +9,11 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import org.apache.commons.io.FilenameUtils;
-import org.testng.ISuite;
 
 import il.co.topq.difido.ZipUtils;
 import il.co.topq.difido.config.RemoteDifidoConfig;
 import il.co.topq.difido.config.RemoteDifidoConfig.RemoteDifidoOptions;
 import il.co.topq.difido.model.execution.Execution;
-import il.co.topq.difido.model.execution.ScenarioNode;
 import il.co.topq.difido.model.remote.ExecutionDetails;
 import il.co.topq.difido.model.test.TestDetails;
 
