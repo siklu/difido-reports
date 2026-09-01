@@ -63,3 +63,4 @@ examples/jsystem-example/tests-project/jsystem0.log.lck
 .metadata/
 .recommenders/
 error_logs
+**/jsystemProject.properties

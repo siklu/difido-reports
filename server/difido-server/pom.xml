@@ -36,11 +36,21 @@
 		<maven.compiler.target>25</maven.compiler.target>
 	</properties>
 	<repositories>
-		<repository>
-			<id>top-q</id>
-			<url>https://maven.top-q.co.il/content/groups/public</url>
-		</repository>
-	</repositories>
+        <repository>
+            <id>Automation</id>
+            <url>https://nsw.ceragon.com/repository/ATE/</url>
+        </repository>
+        <repository>
+            <id>Automation-snapshots</id>
+            <url>https://nsw.ceragon.com/repository/ATE/</url>
+        </repository>
+    </repositories>
+	<pluginRepositories>
+        <pluginRepository>
+            <id>Automation</id>
+            <url>https://nsw.ceragon.com/repository/ATE/</url>
+        </pluginRepository>
+    </pluginRepositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
