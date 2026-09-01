@@ -6,7 +6,7 @@ import java.net.URL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jakarta.ws.rs.core.MediaType;
-import org.springframework.boot.context.properties.bind.DefaultValue;
+import jakarta.ws.rs.DefaultValue;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;

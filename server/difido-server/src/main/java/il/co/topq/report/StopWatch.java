@@ -62,7 +62,7 @@ public class StopWatch {
 		}
 
 		log.trace("Elapsed time for task '" + stopWatch.lastTaskInfo().getTaskName() + "' is: "
-				+ stopWatch.lastTaskInfo().getTimeMillis() + " mills");
+				+ stopWatch.lastTaskInfo().getTimeMillis() + " ms");
 		return this;
 	}
 
