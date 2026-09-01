@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>il.co.top-q.difido</groupId>
     <artifactId>difido-parent</artifactId>
-    <version>3.2.0-SIKLU</version>
+    <version>3.2.1-SIKLU</version>
     <name>Difido Parent</name>
     <packaging>pom</packaging>
     <organization>
